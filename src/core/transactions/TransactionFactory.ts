@@ -15,6 +15,7 @@
  */
 import { Store } from 'vuex'
 import {
+  AccountLinkTransaction,
   Address,
   AddressAliasTransaction,
   AliasTransaction,
@@ -30,6 +31,7 @@ import {
   TransferTransaction,
 } from 'symbol-sdk'
 // internal dependencies
+import { ViewAccountLinkTransaction } from './ViewAccountLinkTransaction'
 import { ViewAliasTransaction } from './ViewAliasTransaction'
 import { ViewMosaicDefinitionTransaction } from './ViewMosaicDefinitionTransaction'
 import { ViewMosaicSupplyChangeTransaction } from './ViewMosaicSupplyChangeTransaction'
@@ -41,6 +43,7 @@ import { ViewUnknownTransaction } from '@/core/transactions/ViewUnknownTransacti
 /// region custom types
 export type TransactionImpl = Transaction
 type TransactionViewType =
+  | ViewAccountLinkTransaction
   | ViewAliasTransaction
   | ViewMosaicDefinitionTransaction
   | ViewMosaicSupplyChangeTransaction
@@ -67,6 +70,7 @@ export class TransactionFactory {
   public build(view: ViewMultisigAccountModificationTransaction): MultisigAccountModificationTransaction
   public build(view: ViewNamespaceRegistrationTransaction): NamespaceRegistrationTransaction
   public build(view: ViewTransferTransaction): TransferTransaction
+  public build(view: ViewAccountLinkTransaction): AccountLinkTransaction
 
   /// end-region specialised signatures
 
@@ -154,6 +158,14 @@ export class TransactionFactory {
         view.values.get('aliasAction'),
         view.values.get('namespaceId'),
         view.values.get('aliasTarget'),
+        networkType,
+        view.values.get('maxFee'),
+      )
+    } else if (view instanceof ViewAccountLinkTransaction) {
+      return AccountLinkTransaction.create(
+        deadline,
+        view.values.get('remotePublicKey'),
+        view.values.get('linkAction'),
         networkType,
         view.values.get('maxFee'),
       )

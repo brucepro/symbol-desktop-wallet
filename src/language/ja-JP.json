@@ -840,8 +840,6 @@
   "Finish": "完了",
   "Type_Mnemonic_Phrase": "ニーモニックフレーズを入力してください",
   "Are_you_sure_to_unlink_this_account": "本当にアカウントをアンリンクしますか？",
-  "remote_account_being_created": "'生成' ボタンをクリックして、有効なリモートアカウントを生成してください。",
-  "link_Or_Change": "リモートアカウントリンク",
   "node_Network": "ハーベスティングノード",
   "requesting": "ハーベスティングデリゲーションリクエスト",
   "change_view": "ビューを変更",

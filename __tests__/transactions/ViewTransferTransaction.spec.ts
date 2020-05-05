@@ -15,7 +15,7 @@
  */
 import { Deadline, NetworkType, PlainMessage, TransactionType, TransferTransaction, UInt64 } from 'symbol-sdk'
 import { createStore } from '@MOCKS/Store'
-import { getTestAccount } from '@MOCKS/profiles'
+import { getTestAccount } from '@MOCKS/Accounts'
 import { getFakeTransaction } from '@MOCKS/Transactions'
 import { TransferFormFieldsType, ViewTransferTransaction } from '@/core/transactions/ViewTransferTransaction'
 
@@ -56,7 +56,7 @@ describe('transactions/ViewTransferTransaction', () => {
       const formItems: TransferFormFieldsType = {
         recipient: getTestAccount('cosigner1').address,
         mosaics: [],
-        message: 'ViewTransferTransaction',
+        message: PlainMessage.create('ViewTransferTransaction'),
         maxFee: UInt64.fromUint(0),
       }
 

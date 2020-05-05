@@ -15,7 +15,7 @@
  */
 import { Deadline, HashLockTransaction, Mosaic, MosaicId, NetworkType, TransactionType, UInt64 } from 'symbol-sdk'
 import { createStore } from '@MOCKS/Store'
-import { getTestAccount } from '@MOCKS/profiles'
+import { getTestAccount } from '@MOCKS/Accounts'
 import { getFakeTransaction } from '@MOCKS/Transactions'
 import { HashLockTransactionFormFieldsType, ViewHashLockTransaction } from '@/core/transactions/ViewHashLockTransaction'
 

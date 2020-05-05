@@ -63,6 +63,7 @@ import { ViewMultisigAccountModificationTransaction } from '@/core/transactions/
 import { ViewHashLockTransaction } from '@/core/transactions/ViewHashLockTransaction'
 import { ViewUnknownTransaction } from '@/core/transactions/ViewUnknownTransaction'
 import { NetworkConfigurationModel } from '@/core/database/entities/NetworkConfigurationModel'
+import { ViewAccountLinkTransaction } from '@/core/transactions/ViewAccountLinkTransaction'
 
 /// region custom types
 export type TransactionViewType =
@@ -75,7 +76,7 @@ export type TransactionViewType =
   | ViewAliasTransaction
   | ViewMultisigAccountModificationTransaction
   | ViewHashLockTransaction
-
+  | ViewAccountLinkTransaction
 /// end-region custom types
 
 export class TransactionService extends AbstractService {
@@ -109,9 +110,9 @@ export class TransactionService extends AbstractService {
   public getView(transaction: AddressAliasTransaction): ViewAliasTransaction
   public getView(transaction: MultisigAccountModificationTransaction): ViewMultisigAccountModificationTransaction
   public getView(transaction: HashLockTransaction): ViewHashLockTransaction
+  public getView(transaction: AccountLinkTransaction): ViewAccountLinkTransaction
   // XXX not implemented yet
   public getView(transaction: AccountAddressRestrictionTransaction): ViewUnknownTransaction
-  public getView(transaction: AccountLinkTransaction): ViewUnknownTransaction
   public getView(transaction: AccountMetadataTransaction): ViewUnknownTransaction
   public getView(transaction: AccountMosaicRestrictionTransaction): ViewUnknownTransaction
   public getView(transaction: AccountOperationRestrictionTransaction): ViewUnknownTransaction
@@ -141,7 +142,6 @@ export class TransactionService extends AbstractService {
     switch (transaction.type) {
       /// region XXX views for transaction types not yet implemented
       case TransactionType.ACCOUNT_ADDRESS_RESTRICTION:
-      case TransactionType.ACCOUNT_LINK:
       case TransactionType.ACCOUNT_METADATA:
       case TransactionType.ACCOUNT_MOSAIC_RESTRICTION:
       case TransactionType.ACCOUNT_OPERATION_RESTRICTION:
@@ -190,6 +190,11 @@ export class TransactionService extends AbstractService {
         view = new ViewAliasTransaction(this.$store)
         view = view.use(transaction as AddressAliasTransaction)
         break
+      case TransactionType.ACCOUNT_LINK:
+        view = new ViewAccountLinkTransaction(this.$store)
+        view = view.use(transaction as AccountLinkTransaction)
+        break
+
       default:
         // - throw on transaction view not implemented
         this.$store.dispatch('diagnostic/ADD_ERROR', `View not implemented for transaction type '${transaction.type}'`)

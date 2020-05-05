@@ -2,11 +2,11 @@
   <div class="account-detail-row-3cols">
     <span class="label">{{ $t('account_address') }}</span>
     <div class="value accountAddress">
-      {{ getAccountPrettyAddress() }}
+      {{ getPrettyAddress() }}
       <img
         src="@/views/resources/img/account/copyIcon.png"
         class="copy-icon"
-        @click="uiHelpers.copyToClipboard(account.address)"
+        @click="uiHelpers.copyToClipboard(address)"
       />
     </div>
   </div>

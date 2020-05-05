@@ -24,7 +24,7 @@ import {
   UInt64,
 } from 'symbol-sdk'
 import { createStore } from '@MOCKS/Store'
-import { getTestAccount } from '@MOCKS/profiles'
+import { getTestAccount } from '@MOCKS/Accounts'
 import { getFakeTransaction } from '@MOCKS/Transactions'
 import { AliasFormFieldsType, ViewAliasTransaction } from '@/core/transactions/ViewAliasTransaction'
 

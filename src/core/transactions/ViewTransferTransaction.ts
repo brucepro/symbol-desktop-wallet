@@ -19,10 +19,10 @@ import {
   Mosaic,
   MosaicId,
   NamespaceId,
-  PlainMessage,
   RawUInt64,
   TransferTransaction,
   UInt64,
+  Message,
 } from 'symbol-sdk'
 // internal dependencies
 import { TransactionView } from './TransactionView'
@@ -36,10 +36,9 @@ export type TransferFormFieldsType = {
     mosaicHex: string
     amount: number
   }[]
-  message?: string
+  message?: Message
   maxFee: UInt64
 }
-
 /// end-region custom types
 
 export class ViewTransferTransaction extends TransactionView<TransferFormFieldsType> {
@@ -82,9 +81,7 @@ export class ViewTransferTransaction extends TransactionView<TransferFormFieldsT
 
     // - set message empty or populate
     this.values.set('message', EmptyMessage)
-    if (formItems.message && formItems.message.length) {
-      this.values.set('message', PlainMessage.create(formItems.message))
-    }
+    if (formItems.message) this.values.set('message', formItems.message)
 
     // - set fee and return
     this.values.set('maxFee', formItems.maxFee)

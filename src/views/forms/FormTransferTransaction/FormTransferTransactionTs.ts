@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and limitations under the License.
  *
  */
-import { Address, Message, Mosaic, MosaicId, NamespaceId, TransferTransaction, UInt64 } from 'symbol-sdk'
+import { Address, Mosaic, MosaicId, NamespaceId, TransferTransaction, UInt64, Message, PlainMessage } from 'symbol-sdk'
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { mapGetters } from 'vuex'
 // internal dependencies
@@ -119,7 +119,7 @@ export class FormTransferTransactionTs extends FormTransactionBase {
     recipient: null,
     selectedMosaicHex: '',
     relativeAmount: 0,
-    messagePlain: '',
+    plainMessage: '',
     maxFee: 0,
   }
 
@@ -162,7 +162,8 @@ export class FormTransferTransactionTs extends FormTransactionBase {
       },
     ]
 
-    this.formItems.messagePlain = !!this.message ? Formatters.hexToUtf8(this.message.payload) : ''
+    this.formItems.plainMessage = this.message ? Formatters.hexToUtf8(this.message.payload) : ''
+
     // - maxFee must be absolute
     this.formItems.maxFee = this.defaultFee
     // - initialize mosaics input manager
@@ -226,7 +227,7 @@ export class FormTransferTransactionTs extends FormTransactionBase {
               amount: spec.amount, // amount is relative
             }),
           ),
-        message: this.formItems.messagePlain,
+        message: PlainMessage.create(this.formItems.plainMessage),
         maxFee: UInt64.fromUint(this.formItems.maxFee),
       }
 
@@ -261,7 +262,7 @@ export class FormTransferTransactionTs extends FormTransactionBase {
     this.formItems.attachedMosaics = this.mosaicsToAttachments(transaction.mosaics)
 
     // - convert and populate message
-    this.formItems.messagePlain = Formatters.hexToUtf8(transaction.message.payload)
+    this.formItems.plainMessage = Formatters.hexToUtf8(transaction.message.payload)
 
     // - populate maxFee
     this.formItems.maxFee = transaction.maxFee.compact()
